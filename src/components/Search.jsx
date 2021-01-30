@@ -4,7 +4,7 @@
 */
 
 // React
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 // axios
 import axios from 'axios'
 
@@ -15,7 +15,10 @@ const PER_PAGE = '20'
 // 表示するページ番号
 const PAGE_NUMBER = '1'
 
-// コンポーネント定義
+/**
+ * コンポーネント定義
+ * @param {Object} props
+ */
 export const Search = (props) => {
   // props
   const { setQiitaPosts } = props
@@ -78,6 +81,14 @@ export const Search = (props) => {
     // フォーマット
     return `${yearStr}年${monthStr}月${dayStr}日`
   }
+
+  // 検索キーワードを空白にしたら記事一覧も消す
+  useEffect(() => {
+    if (searchKeyword === '') {
+      setQiitaPosts([])
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchKeyword])
 
   // JSXをリターン
   return (
